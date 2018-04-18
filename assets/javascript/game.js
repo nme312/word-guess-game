@@ -47,28 +47,19 @@ document.onkeyup =function(event) {
     var currentGuess = event.key;
     userGuess.textContent = currentGuess;
 }
- 
+
+//attempt to loop through individual string, does not log
+    for(var i = 0; i < randomWord.length; i++){
+        console.log(randomWord.charAt[i]);
+    }
+    
+//logs undefined ???
+console.log(randomWord.length);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-console.log(currentWord);
-console.log(userGuess);
-console.log(conChk);
+//console.log(currentWord);
+//console.log(userGuess);
+//console.log(conChk);
 
 
