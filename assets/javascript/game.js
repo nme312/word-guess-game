@@ -49,12 +49,11 @@ document.onkeyup =function(event) {
 }
 
 //attempt to loop through individual string, does not log
-    for(var i = 0; i < randomWord.length; i++){
-        console.log(randomWord.charAt[i]);
+    for(var i = 0; i < wordList[randomWord].length; i++){
+        console.log(wordList[randomWord].charAt[i]);
     }
-    
-//logs undefined ???
-console.log(randomWord.length);
+
+
 
 
 
