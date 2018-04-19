@@ -2,7 +2,6 @@ var wordList = [
 "Top Gun", 
 "Back To The Future", 
 "Ferris Bueller's Day Off", 
-"Butch Cassidy and The Sundance Kid", 
 "The Fugitive",
 "Scream",
 "Forest Gump",
@@ -29,36 +28,90 @@ var wordList = [
 "Cinderella Man",
 "Footloose",
 "Lords of Dogtown",
-"GhostBusters"
-]
+"Ghostbusters"
+];
+
+var blankWord = [];
 
 var conChk = 0;
 
 var userGuess = document.getElementById("userGuess");
-var pastGuesses;
-var guessLimit = 10;
+var pastGuesses = document.getElementById("pastGuesses");
+var guessesLeft = document.getElementById("guessesLeft");
 
-var currentWord = document.getElementById("currentWord");
-var randomWord = (Math.floor(Math.random() * wordList.length));
+var wrongGuesses = [];
+var guessLimit = 15;
+var losses = 0;
+var wins = 0;
 
-currentWord.textContent = wordList[randomWord];
+var randomNum = (Math.floor(Math.random() * wordList.length));
+var randomWord = wordList[randomNum];
 
-document.onkeyup =function(event) {
-    var currentGuess = event.key;
-    userGuess.textContent = currentGuess;
+for(var i=0; i<randomWord.length; i++) {
+    if(randomWord.charAt(i) === " "){
+        blankWord.push("\xa0");
+    }
+    else{
+        blankWord.push("_");
+
+    }
 }
 
-//attempt to loop through individual string, does not log
-    for(var i = 0; i < wordList[randomWord].length; i++){
-        console.log(wordList[randomWord].charAt[i]);
+var currentWord = document.getElementById("currentWord");
+currentWord.textContent = blankWord.join(" ");
+
+guessesLeft.textContent = guessLimit;
+
+
+document.onkeyup = function(event) {
+
+    var currentGuess = event.key;
+    userGuess.textContent = currentGuess;
+   
+    for(var i = 0; i < randomWord.length; i++) {
+
+        if (currentGuess === (wordList[randomNum].charAt(i))) {
+            blankWord[i] = currentGuess;
+            currentWord.textContent = blankWord.join(" ");
+        }
+        
+        if (currentGuess.toUpperCase() === (wordList[randomNum].charAt(i))) {
+            blankWord[i] = currentGuess.toUpperCase();
+            currentWord.textContent = blankWord.join(" ");
+        }
     }
 
+    if (currentGuess !== (wordList[randomNum].charAt(i))){
+        wrongGuesses.push(currentGuess);
+        guessLimit --;
+        guessesLeft.textContent = guessLimit;
+        pastGuesses.textContent = wrongGuesses;   
+    }
+    
+}
 
-
-
-
-//console.log(currentWord);
+console.log(currentWord);
+console.log(currentWord.length);
 //console.log(userGuess);
 //console.log(conChk);
 
+//Underscore Idea
 
+// var arr = ["_", "_", "_"];
+// undefined
+// arr.join();
+// "_,_,_"
+// arr.join("");
+// "___"
+// arr.join(" ");
+// "_ _ _"
+// arr[1]="e"
+// "e"
+// arr.join(" ");
+// "_ e _"
+// arr
+// (3) ["_", "e", "_"]
+
+// for(var j=0; j<6; j++){
+//     console.log("n");   
+// }
