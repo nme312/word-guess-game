@@ -1,34 +1,33 @@
 var wordList = [
-"Top Gun", 
-"Back To The Future", 
-"Ferris Bueller's Day Off", 
-"The Fugitive",
-"Scream",
-"Forest Gump",
-"Star Wars",
-"Norbit",
-"The Sandlot",
-"Little Rascals",
-"The God Father",
-"Independence Day",
-"E.T.",
-"Titanic",
-"Avatar",
-"Jurrassic Park",
-"Lion King",
-"The Jungle Book",
-"Black Panther",
-"Captain America: Civil War",
-"DeadPool",
-"Mean Girls",
-"Chronicle",
-"The Dark Knight",
-"The Matrix",
-"The Room",
-"Cinderella Man",
-"Footloose",
-"Lords of Dogtown",
-"Ghostbusters"
+    "Top Gun",
+    "Back To The Future",
+    "Ferris Bueller's Day Off",
+    "The Fugitive",
+    "Scream",
+    "Forest Gump",
+    "Star Wars",
+    "Norbit",
+    "The Sandlot",
+    "Little Rascals",
+    "The God Father",
+    "Independence Day",
+    "E.T.",
+    "Titanic",
+    "Avatar",
+    "Jurrassic Park",
+    "Lion King",
+    "Black Panther",
+    "Captain America: Civil War",
+    "Deadpool",
+    "Mean Girls",
+    "Chronicle",
+    "The Dark Knight",
+    "The Matrix",
+    "The Room",
+    "Cinderella Man",
+    "Footloose",
+    "Lords of Dogtown",
+    "Ghostbusters"
 ];
 
 var blankWord = [];
@@ -44,74 +43,65 @@ var guessLimit = 15;
 var losses = 0;
 var wins = 0;
 
-var randomNum = (Math.floor(Math.random() * wordList.length));
-var randomWord = wordList[randomNum];
-
-for(var i=0; i<randomWord.length; i++) {
-    if(randomWord.charAt(i) === " "){
-        blankWord.push("\xa0");
-    }
-    else{
-        blankWord.push("_");
-
-    }
-}
-
-var currentWord = document.getElementById("currentWord");
-currentWord.textContent = blankWord.join(" ");
-
 guessesLeft.textContent = guessLimit;
 
+var randomNum;
+var randomWord;
+var currentWord = document.getElementById("currentWord");
 
-document.onkeyup = function(event) {
+function startGame() {
+    randomNum = (Math.floor(Math.random() * wordList.length));
+    randomWord = wordList[randomNum];
+    blankWord = [];
+
+    for (var i = 0; i < randomWord.length; i++) {
+
+        if (randomWord.charAt(i) === " ") {
+            blankWord.push("\xa0");
+        }
+        else {
+            blankWord.push("_");
+        }
+    }
+
+    currentWord.textContent = blankWord.join(" ");
+    guessLimit = 15;
+    wrongGuesses = [];
+}
+
+startGame();
+document.onkeyup = function (event) {
 
     var currentGuess = event.key;
     userGuess.textContent = currentGuess;
-   
-    for(var i = 0; i < randomWord.length; i++) {
 
-        if (currentGuess === (wordList[randomNum].charAt(i))) {
-            blankWord[i] = currentGuess;
-            currentWord.textContent = blankWord.join(" ");
-        }
-        
-        if (currentGuess.toUpperCase() === (wordList[randomNum].charAt(i))) {
-            blankWord[i] = currentGuess.toUpperCase();
+    for (var i = 0; i < randomWord.length; i++) {
+
+        if (currentGuess.toLowerCase() === (wordList[randomNum].charAt(i)).toLowerCase()) {
+            blankWord[i] = wordList[randomNum].charAt(i);
             currentWord.textContent = blankWord.join(" ");
         }
     }
 
-    if (currentGuess !== (wordList[randomNum].charAt(i))){
+    if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
+        console.log("works");
+        guessLimit--;
         wrongGuesses.push(currentGuess);
-        guessLimit --;
         guessesLeft.textContent = guessLimit;
-        pastGuesses.textContent = wrongGuesses;   
+        pastGuesses.textContent = wrongGuesses;
     }
-    
+
+    if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
+        guessLimit = guessLimit;
+    }
+
+    if ((guessLimit === 0) || (randomWord === currentWord)) {
+        startGame();
+    }
 }
 
+console.log(blankWord);
 console.log(currentWord);
-console.log(currentWord.length);
+console.log(randomWord);
 //console.log(userGuess);
 //console.log(conChk);
-
-//Underscore Idea
-
-// var arr = ["_", "_", "_"];
-// undefined
-// arr.join();
-// "_,_,_"
-// arr.join("");
-// "___"
-// arr.join(" ");
-// "_ _ _"
-// arr[1]="e"
-// "e"
-// arr.join(" ");
-// "_ e _"
-// arr
-// (3) ["_", "e", "_"]
-
-// for(var j=0; j<6; j++){
-//     console.log("n");   
-// }
