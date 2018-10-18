@@ -1,107 +1,124 @@
-var wordList = [
-    "Top Gun",
-    "Back To The Future",
-    "Ferris Bueller's Day Off",
-    "The Fugitive",
-    "Scream",
-    "Forest Gump",
-    "Star Wars",
-    "Norbit",
-    "The Sandlot",
-    "Little Rascals",
-    "The God Father",
-    "Independence Day",
-    "E.T.",
-    "Titanic",
-    "Avatar",
-    "Jurrassic Park",
-    "Lion King",
-    "Black Panther",
-    "Captain America: Civil War",
-    "Deadpool",
-    "Mean Girls",
-    "Chronicle",
-    "The Dark Knight",
-    "The Matrix",
-    "The Room",
-    "Cinderella Man",
-    "Footloose",
-    "Lords of Dogtown",
-    "Ghostbusters"
-];
+$(document).ready(function () {
 
-var blankWord = [];
+    var wordList = [
+        "Top Gun",
+        "Back To The Future",
+        "Ferris Bueller's Day Off",
+        "The Fugitive",
+        "Scream",
+        "Forest Gump",
+        "Star Wars",
+        "Norbit",
+        "The Sandlot",
+        "Little Rascals",
+        "The God Father",
+        "Independence Day",
+        "E.T.",
+        "Titanic",
+        "Avatar",
+        "Jurrassic Park",
+        "Lion King",
+        "Black Panther",
+        "Captain America: Civil War",
+        "Deadpool",
+        "Mean Girls",
+        "Chronicle",
+        "The Dark Knight",
+        "The Matrix",
+        "The Room",
+        "Cinderella Man",
+        "Footloose",
+        "Lords of Dogtown",
+        "Ghostbusters"
+    ];
 
-var conChk = 0;
+    var blankWord = [];
 
-var userGuess = document.getElementById("userGuess");
-var pastGuesses = document.getElementById("pastGuesses");
-var guessesLeft = document.getElementById("guessesLeft");
+    var conChk = 0;
 
-var wrongGuesses = [];
-var guessLimit = 15;
-var losses = 0;
-var wins = 0;
+    var userGuess = $("#userGuess");
+    var pastGuesses = $("#pastGuesses");
+    var guessesLeft = $("#guessesLeft");
 
-guessesLeft.textContent = guessLimit;
+    var wrongGuesses = [];
+    var guessLimit = 15;
+    var losses = 0;
+    var wins = 0;
 
-var randomNum;
-var randomWord;
-var currentWord = document.getElementById("currentWord");
+    guessesLeft.textContent = guessLimit;
 
-function startGame() {
-    randomNum = (Math.floor(Math.random() * wordList.length));
-    randomWord = wordList[randomNum];
-    blankWord = [];
+    var randomNum;
+    var randomWord;
+    var currentWord = $("#currentWord");
 
-    for (var i = 0; i < randomWord.length; i++) {
+    function startGame() {
+        randomNum = (Math.floor(Math.random() * wordList.length));
+        randomWord = wordList[randomNum];
+        blankWord = [];
 
-        if (randomWord.charAt(i) === " ") {
-            blankWord.push("\xa0");
+        for (var i = 0; i < randomWord.length; i++) {
+
+            if (randomWord.charAt(i) === " ") {
+                blankWord.push("\xa0");
+            }
+            else {
+                blankWord.push("_");
+            }
         }
-        else {
-            blankWord.push("_");
+
+        currentWord.textContent = blankWord.join(" ");
+        guessLimit = 15;
+        wrongGuesses = [];
+    }
+
+    startGame();
+    document.onkeyup = function (event) {
+
+        var currentGuess = event.key;
+        userGuess.textContent = currentGuess;
+
+        for (var i = 0; i < randomWord.length; i++) {
+
+            if (currentGuess.toLowerCase() === (wordList[randomNum].charAt(i)).toLowerCase()) {
+                blankWord[i] = wordList[randomNum].charAt(i);
+                currentWord.textContent = blankWord.join(" ");
+            }
+        }
+
+        if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
+            console.log("works");
+            guessLimit--;
+            wrongGuesses.push(currentGuess);
+            guessesLeft.textContent = guessLimit;
+            pastGuesses.textContent = wrongGuesses;
+        }
+
+        if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
+            guessLimit = guessLimit;
+        }
+
+        if ((guessLimit === 0) || (randomWord === currentWord)) {
+            startGame();
         }
     }
 
-    currentWord.textContent = blankWord.join(" ");
-    guessLimit = 15;
-    wrongGuesses = [];
-}
+    console.log("blankWord");
+    console.log(blankWord);
+    console.log("-----------------------");
 
-startGame();
-document.onkeyup = function (event) {
+    console.log("currentWord");
+    console.log(currentWord);
+    console.log("-----------------------");
 
-    var currentGuess = event.key;
-    userGuess.textContent = currentGuess;
+    console.log("randomWord");
+    console.log(randomWord);
+    console.log("-----------------------");
 
-    for (var i = 0; i < randomWord.length; i++) {
+    console.log("userGuess");
+    console.log(userGuess.val());
+    console.log("-----------------------");
 
-        if (currentGuess.toLowerCase() === (wordList[randomNum].charAt(i)).toLowerCase()) {
-            blankWord[i] = wordList[randomNum].charAt(i);
-            currentWord.textContent = blankWord.join(" ");
-        }
-    }
+    console.log("conChk");
+    console.log(conChk);
 
-    if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
-        console.log("works");
-        guessLimit--;
-        wrongGuesses.push(currentGuess);
-        guessesLeft.textContent = guessLimit;
-        pastGuesses.textContent = wrongGuesses;
-    }
-
-    if ((currentGuess !== (randomWord.charAt(i))) && (guessLimit > 0)) {
-        guessLimit = guessLimit;
-    }
-
-    if ((guessLimit === 0) || (randomWord === currentWord)) {
-        startGame();
-    }
-}
-
-console.log(blankWord);
-console.log(currentWord);
-console.log(randomWord);
-//console.log(userGuess);
-//console.log(conChk);
+});
