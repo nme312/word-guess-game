@@ -120,5 +120,4 @@ $(document).ready(function () {
 
     console.log("conChk");
     console.log(conChk);
-
 });
