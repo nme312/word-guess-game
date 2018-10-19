@@ -117,7 +117,8 @@ $(document).ready(function () {
     console.log("userGuess");
     console.log(userGuess.val());
     console.log("-----------------------");
-
+    
     console.log("conChk");
     console.log(conChk);
+    console.log("-----------------------");
 });
